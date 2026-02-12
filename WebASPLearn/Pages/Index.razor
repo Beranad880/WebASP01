@@ -1,0 +1,34 @@
+@page "/"
+@inject WebASPLearn.Services.UserService UserService
+@using WebASPLearn.Models
+
+<PageTitle>Users</PageTitle>
+
+<div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">User Management</h1>
+    <p class="mt-1 text-sm text-gray-500">Add, edit, and manage your users.</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="lg:col-span-4">
+        <UserForm OnUserAdded="LoadUsers" />
+    </div>
+    <div class="lg:col-span-8">
+        <UserList Users="users" OnUserUpdated="LoadUsers" />
+    </div>
+</div>
+
+@code {
+    private List<User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    private async Task LoadUsers()
+    {
+        users = await UserService.GetAsync();
+        StateHasChanged();
+    }
+}

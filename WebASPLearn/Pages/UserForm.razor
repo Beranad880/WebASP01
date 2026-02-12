@@ -1,0 +1,66 @@
+@inject WebASPLearn.Services.UserService UserService
+@using WebASPLearn.Models
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Add New User</h3>
+
+    <EditForm Model="@NewUser" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-red-500 text-sm mb-4" />
+
+        <div class="space-y-4">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <InputText id="name"
+                           class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
+                           @bind-Value="NewUser.Name" />
+            </div>
+            <div>
+                <label for="surname" class="block text-sm font-medium text-gray-700 mb-1">Surname</label>
+                <InputText id="surname"
+                           class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
+                           @bind-Value="NewUser.Surname" />
+            </div>
+            <div>
+                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <InputText id="address"
+                           class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
+                           @bind-Value="NewUser.Address" />
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <InputText id="email"
+                           class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
+                           @bind-Value="NewUser.Email" />
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <InputText id="phone"
+                           class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
+                           @bind-Value="NewUser.Phone" />
+            </div>
+        </div>
+
+        <button type="submit"
+                class="mt-5 w-full inline-flex justify-center items-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add User
+        </button>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnUserAdded { get; set; }
+
+    private User NewUser = new User();
+
+    private async Task HandleValidSubmit()
+    {
+        await UserService.CreateAsync(NewUser);
+        NewUser = new User();
+        await OnUserAdded.InvokeAsync();
+    }
+}

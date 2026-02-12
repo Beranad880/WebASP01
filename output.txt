@@ -1,0 +1,3 @@
+The `README.md` file has been created and is located in the root of your project directory: `D:\soft\dotnet\WebASPLearn\README.md`.
+
+You should see it alongside files like `.gitignore` and `WebASPLearn.slnx`. If you're using a file explorer or IDE, you might need to refresh the view of the `WebASPLearn` folder to see the newly created file.
